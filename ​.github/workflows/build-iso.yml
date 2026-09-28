@@ -1,0 +1,27 @@
+name: Build Nana OS ISO
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repositório
+        uses: actions/checkout@v4
+
+      - name: Instalar Dependências do Archiso
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y archiso squashfs-tools genisoimage
+
+      - name: Compilar a ISO Live do Nana OS
+        run: |
+          sudo mkarchiso -v -w work/ -o out/ profile/
+
+      - name: Enviar a ISO como Artefato no GitHub
+        uses: actions/upload-artifact@v4
+        with:
+          name: Nana-OS-Live-ISO
+          path: out/*.iso
