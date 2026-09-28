@@ -1,0 +1,17 @@
+[Unit]
+Description=Nana OS Kiosk Mode
+After=network.target sound.target bluetooth.target
+
+[Service]
+User=nana
+Group=nana
+Environment=XDG_SESSION_TYPE=wayland
+Environment=SDL_VIDEODRIVER=wayland
+ExecStart=/usr/bin/emulationstation --no-splash
+Restart=always
+RestartSec=3
+StandardInput=tty
+TTYPath=/dev/tty7
+
+[Install]
+WantedBy=multi-user.target
